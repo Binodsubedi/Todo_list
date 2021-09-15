@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter.font import Font
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 
 
@@ -225,6 +226,12 @@ def new_win():
     btn1 = Button(new, text='Save', command=save)
     btn1.pack()
 
+def focs():
+    messagebox.showinfo('Option', 'you can delete subject entering Serial number')
+    Ent.focus()
+
+
+
 c.execute('SELECT *,oid FROM info')
 
 records = c.fetchall()
@@ -245,7 +252,7 @@ for record in records:
     lb2.grid(row=1, column=0, padx=10, pady=(0, 12))
 
 
-    btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3)
+    btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3, command=focs)
     btnn.grid(row=0, column=1, pady=(0, 8))
     root.bind('<Button-1>', check)
     #btn_holder['btnn' + str(record[2])].bind('<Button-1>', delete)
@@ -263,6 +270,8 @@ Ent = Entry(my_frame, width=10, bg='#f009f3')
 Ent.place(x=451, y=20)
 btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
 btn1.place(x=518, y=15)
+
+
 
 conn.commit()
 
