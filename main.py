@@ -63,6 +63,10 @@ font1 =Font(
     size= 25,
     weight = 'bold'
 )
+font2 = Font(
+    size=15,
+    weight='bold'
+)
 
 def check(event):
 
@@ -94,6 +98,8 @@ def check(event):
     print(n)
 
 def delete():
+
+
     conn = sqlite3.connect('data.db')
 
     c = conn.cursor()
@@ -137,7 +143,7 @@ def delete():
         number += 1
 
     #'#F0F0ED'
-    lbb = LabelFrame(my_frame, bg='yellow', height=80, width=420, bd=0).place(x=100, y=axis)
+    #lbb = LabelFrame(my_frame, bg='yellow', height=80, width=420, bd=0).place(x=100, y=axis)
 
 
 
@@ -214,21 +220,34 @@ def save():
 
 
 def new_win():
-    global ent1, ent2, new
+    global ent1, ent2, new, img
     new = Toplevel()
 
-    ent1 = Entry(new)
-    ent1.pack()
+    img = PhotoImage(file='C:/Users/dell/Documents/grad.png')
+    lb = Label(new, image=img)
+    lb.place(x=0, y=0)
 
-    ent2 = Entry(new)
-    ent2.pack()
+    new.geometry('300x300')
 
-    btn1 = Button(new, text='Save', command=save)
-    btn1.pack()
+    lbb1 = Label(new, text='Subject', bg='#bccae0', bd=0, font=font2).place(x=126, y=30)
+    ent1 = Entry(new, width=30,bd=0)
+    ent1.place(x=57, y=60)
+
+    lbb2 = Label(new, text='Date', bg='#bccae0', bd=0, font=font2).place(x=132, y=90)
+    ent2 = Entry(new, bd=0)
+    ent2.place(x=85, y=120)
+
+    btn1 = Button(new, text='Save', command=save, bg='#419c7d', bd=0, font=font2)
+    btn1.place(x=130, y=150)
 
 def focs():
     messagebox.showinfo('Option', 'you can delete subject entering Serial number')
     Ent.focus()
+
+
+imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
+lable = Label(my_frame, image=imgg, width=600)
+lable.place(x=0, y=0)
 
 
 
