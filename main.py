@@ -68,6 +68,27 @@ font2 = Font(
     weight='bold'
 )
 
+
+def easy_view():
+    global Ent,imgg
+
+    imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
+    lable = Label(my_frame, image=imgg, width=600)
+    lable.place(x=0, y=0)
+
+    btn = Button(my_frame, text='+', bg='#1f3354', fg='white', height=1, width=5, font=font1,
+                 activebackground='#1f3354', command=new_win)
+    btn.place(x='235', y='220')
+
+    Ent = Entry(my_frame, width=10, bg='#f009f3')
+    Ent.place(x=451, y=20)
+    btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
+    btn1.place(x=518, y=15)
+
+
+
+
+
 def check(event):
 
     print(event.x_root, event.y)
@@ -99,7 +120,7 @@ def check(event):
 
 def delete():
 
-
+    global Ent, imgg
     conn = sqlite3.connect('data.db')
 
     c = conn.cursor()
@@ -113,10 +134,22 @@ def delete():
 
     Ent.delete(0, END)
 
+    #checking ways
+    '''
+    imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
+    lable = Label(my_frame, image=imgg, width=600)
+    lable.place(x=0, y=0)
 
+    btn = Button(my_frame, text='+', bg='#1f3354', fg='white', height=1, width=5, font=font1,
+                 activebackground='#1f3354', command=new_win)
+    btn.place(x='235', y='220')
 
-
-
+    Ent = Entry(my_frame, width=10, bg='#f009f3')
+    Ent.place(x=451, y=20)
+    btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
+    btn1.place(x=518, y=15)
+'''
+    easy_view()
     #records = c.fetchall()
     #print(records)
 
@@ -135,7 +168,7 @@ def delete():
         lb1.grid(row=0, column=0, padx=10, pady=(12, 0))
         lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='blue', fg='white')
         lb2.grid(row=1, column=0, padx=10, pady=(0, 12))
-        btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3)
+        btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3,command=focs)
         btnn.grid(row=0, column=1, pady=(0, 8))
         btnn.bind('<Button-1>', check)
         var_holder['lablo' + str(record[2])].place(x='100', y=axis)
@@ -202,7 +235,7 @@ def save():
         lb1.grid(row=0, column=0,padx=10, pady=(12,0))
         lb2 = Label(var_holder['lablo'+str(record[2])], text=record[1], bg='blue', fg='white')
         lb2.grid(row=1, column=0,padx=10, pady=(0,12))
-        btnn = Button(var_holder['lablo'+str(record[2])],bg='green', text=record[2] , height=1, width=3)
+        btnn = Button(var_holder['lablo'+str(record[2])],bg='green', text=record[2] , height=1, width=3,command=focs)
         btnn.grid(row=0, column=1, pady=(0,8))
         btnn.bind('<Button-1>', check )
         print(number)
@@ -227,33 +260,36 @@ def new_win():
     lb = Label(new, image=img)
     lb.place(x=0, y=0)
 
-    new.geometry('300x300')
+    new.geometry('300x300+620+180')
 
-    lbb1 = Label(new, text='Subject', bg='#bccae0', bd=0, font=font2).place(x=126, y=30)
+    lbb1 = Label(new, text='Subject', bg='#bccae0', bd=0, font=font2).place(x=120, y=30)
     ent1 = Entry(new, width=30,bd=0)
-    ent1.place(x=57, y=60)
+    ent1.place(x=62, y=60)
 
     lbb2 = Label(new, text='Date', bg='#bccae0', bd=0, font=font2).place(x=132, y=90)
     ent2 = Entry(new, bd=0)
-    ent2.place(x=85, y=120)
+    ent2.place(x=90, y=120)
 
     btn1 = Button(new, text='Save', command=save, bg='#419c7d', bd=0, font=font2)
-    btn1.place(x=130, y=150)
+    btn1.place(x=126, y=160)
 
 def focs():
     messagebox.showinfo('Option', 'you can delete subject entering Serial number')
     Ent.focus()
 
-
+'''
 imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
 lable = Label(my_frame, image=imgg, width=600)
 lable.place(x=0, y=0)
 
+'''
 
+easy_view()
 
 c.execute('SELECT *,oid FROM info')
 
 records = c.fetchall()
+
 
 axis = '320'
 
@@ -281,7 +317,7 @@ for record in records:
 
 
 
-
+'''
 btn = Button(my_frame, text='+', bg='#1f3354', fg='white', height=1, width=5, font=font1, activebackground='#1f3354', command=new_win)
 btn.place(x='235', y='220')
 
@@ -290,6 +326,7 @@ Ent.place(x=451, y=20)
 btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
 btn1.place(x=518, y=15)
 
+'''
 
 
 conn.commit()
