@@ -8,7 +8,7 @@ import sqlite3
 
 root = Tk()
 root.geometry('600x600+460+75')
-#root.resizable(False, False)
+root.resizable(False, False)
 
 
 
@@ -19,7 +19,7 @@ main_frame = Frame(root, height=791, width=1000)
 my_canvas = Canvas(main_frame, height=596, width=578)
 my_canvas.pack(side=LEFT, fill='y', expand='yes')
 
-my_frame = Frame(my_canvas, height=800, width=578, bg='yellow')
+my_frame = Frame(my_canvas, height=900, width=578)
 my_canvas.create_window((0,0), window=my_frame, anchor='nw')
 
 
@@ -72,7 +72,7 @@ font2 = Font(
 def easy_view():
     global Ent,imgg
 
-    imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
+    imgg = ImageTk.PhotoImage(file='images/bg-3.jpg')
     lable = Label(my_frame, image=imgg, width=600)
     lable.place(x=0, y=0)
 
@@ -80,14 +80,16 @@ def easy_view():
                  activebackground='#1f3354', command=new_win)
     btn.place(x='235', y='220')
 
-    Ent = Entry(my_frame, width=10, bg='#f009f3')
+    Ent = Entry(my_frame, width=10, bg='#239e7f')
     Ent.place(x=451, y=20)
     btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
     btn1.place(x=518, y=15)
 
 
 
+#Checking ideas
 
+'''
 
 def check(event):
 
@@ -117,6 +119,8 @@ def check(event):
                 else:
                     n=n+1
     print(n)
+'''
+
 
 def delete():
 
@@ -162,15 +166,15 @@ def delete():
     number = 1
     axis = '320'
     for record in records:
-        var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='blue')
+        var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='#119959')
         locals().update(var_holder)
-        lb1 = Label(var_holder['lablo' + str(record[2])], text=record[0], bg='blue', fg='white', width=50)
+        lb1 = Label(var_holder['lablo' + str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
         lb1.grid(row=0, column=0, padx=10, pady=(12, 0))
-        lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='blue', fg='white')
+        lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='#119959', fg='white')
         lb2.grid(row=1, column=0, padx=10, pady=(0, 12))
         btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3,command=focs)
         btnn.grid(row=0, column=1, pady=(0, 8))
-        btnn.bind('<Button-1>', check)
+
         var_holder['lablo' + str(record[2])].place(x='100', y=axis)
         axis = str(int(axis) + 100)
         number += 1
@@ -229,15 +233,15 @@ def save():
     axis = '320'
     number = 1
     for record in records:
-        var_holder['lablo'+str(record[2])]=Frame(my_frame, bg='blue')
+        var_holder['lablo'+str(record[2])]=Frame(my_frame, bg='#119959')
         locals().update(var_holder)
-        lb1 = Label(var_holder['lablo'+str(record[2])], text=record[0], bg='blue', fg='white', width=50)
+        lb1 = Label(var_holder['lablo'+str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
         lb1.grid(row=0, column=0,padx=10, pady=(12,0))
-        lb2 = Label(var_holder['lablo'+str(record[2])], text=record[1], bg='blue', fg='white')
+        lb2 = Label(var_holder['lablo'+str(record[2])], text=record[1], bg='#119959', fg='white')
         lb2.grid(row=1, column=0,padx=10, pady=(0,12))
         btnn = Button(var_holder['lablo'+str(record[2])],bg='green', text=record[2] , height=1, width=3,command=focs)
         btnn.grid(row=0, column=1, pady=(0,8))
-        btnn.bind('<Button-1>', check )
+
         print(number)
         var_holder['lablo'+str(record[2])].place(x='100', y=axis)
         axis = str(int(axis)+ 100)
@@ -255,8 +259,9 @@ def save():
 def new_win():
     global ent1, ent2, new, img
     new = Toplevel()
+    new.resizable(0,0)
 
-    img = PhotoImage(file='C:/Users/dell/Documents/grad.png')
+    img = PhotoImage(file='images/grad.png')
     lb = Label(new, image=img)
     lb.place(x=0, y=0)
 
@@ -298,18 +303,18 @@ num=1
 print(records)
 
 for record in records:
-    var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='blue')
+    var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='#119959')
 
     locals().update(var_holder)
-    lb1 = Label(var_holder['lablo' + str(record[2])], text=record[0], bg='blue', fg='white', width=50)
+    lb1 = Label(var_holder['lablo' + str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
     lb1.grid(row=0, column=0, padx=10, pady=(12, 0))
-    lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='blue', fg='white')
+    lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='#119959', fg='white')
     lb2.grid(row=1, column=0, padx=10, pady=(0, 12))
 
 
     btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3, command=focs)
     btnn.grid(row=0, column=1, pady=(0, 8))
-    root.bind('<Button-1>', check)
+
     #btn_holder['btnn' + str(record[2])].bind('<Button-1>', delete)
     var_holder['lablo' + str(record[2])].place(x='100', y=axis)
     axis = str(int(axis) + 100)
