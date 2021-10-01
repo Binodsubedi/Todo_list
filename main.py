@@ -1,9 +1,11 @@
 from tkinter import *
+import pytest
 from PIL import ImageTk, Image
 from tkinter.font import Font
 from tkinter import ttk
 from tkinter import messagebox
 import sqlite3
+
 
 
 root = Tk()
@@ -69,6 +71,9 @@ font2 = Font(
 )
 
 
+number = 0
+
+
 def easy_view():
     global Ent,imgg
 
@@ -124,69 +129,90 @@ def check(event):
 
 def delete():
 
+
+
     global Ent, imgg
-    conn = sqlite3.connect('data.db')
-
-    c = conn.cursor()
 
 
 
-    #print(event.x)
-    #print(var.get())
+    lol= Ent.get()
 
-    c.execute('DELETE FROM info WHERE oid=' + Ent.get())
 
-    Ent.delete(0, END)
+    if Ent.get() != '':
 
-    #checking ways
-    '''
-    imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
-    lable = Label(my_frame, image=imgg, width=600)
-    lable.place(x=0, y=0)
 
-    btn = Button(my_frame, text='+', bg='#1f3354', fg='white', height=1, width=5, font=font1,
+        conn = sqlite3.connect('data.db')
+
+        c = conn.cursor()
+
+
+
+
+        #print(event.x)
+        #print(var.get())
+
+        c.execute('DELETE FROM info WHERE oid=' + Ent.get())
+
+        Ent.delete(0, END)
+
+
+
+        #checking ways
+        '''
+        imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
+        lable = Label(my_frame, image=imgg, width=600)
+        lable.place(x=0, y=0)
+
+        btn = Button(my_frame, text='+', bg='#1f3354', fg='white', height=1, width=5, font=font1,
                  activebackground='#1f3354', command=new_win)
-    btn.place(x='235', y='220')
+        btn.place(x='235', y='220')
 
-    Ent = Entry(my_frame, width=10, bg='#f009f3')
-    Ent.place(x=451, y=20)
-    btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
-    btn1.place(x=518, y=15)
-'''
-    easy_view()
-    #records = c.fetchall()
-    #print(records)
-
-
-
-    c.execute('SELECT *,oid FROM info')
-
-    records = c.fetchall()
-
-    number = 1
-    axis = '320'
-    for record in records:
-        var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='#119959')
-        locals().update(var_holder)
-        lb1 = Label(var_holder['lablo' + str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
-        lb1.grid(row=0, column=0, padx=10, pady=(12, 0))
-        lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='#119959', fg='white')
-        lb2.grid(row=1, column=0, padx=10, pady=(0, 12))
-        btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3,command=focs)
-        btnn.grid(row=0, column=1, pady=(0, 8))
-
-        var_holder['lablo' + str(record[2])].place(x='100', y=axis)
-        axis = str(int(axis) + 100)
-        number += 1
-
-    #'#F0F0ED'
-    #lbb = LabelFrame(my_frame, bg='yellow', height=80, width=420, bd=0).place(x=100, y=axis)
+        Ent = Entry(my_frame, width=10, bg='#f009f3')
+        Ent.place(x=451, y=20)
+        btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
+        btn1.place(x=518, y=15)
+        '''
+        easy_view()
+        #records = c.fetchall()
+        #print(records)
 
 
 
-    conn.commit()
+        c.execute('SELECT *,oid FROM info')
 
-    conn.close()
+        records = c.fetchall()
+
+        number = 1
+        axis = '320'
+        for record in records:
+            var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='#119959')
+            locals().update(var_holder)
+            lb1 = Label(var_holder['lablo' + str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
+            lb1.grid(row=0, column=0, padx=10, pady=(12, 0))
+            lb2 = Label(var_holder['lablo' + str(record[2])], text=record[1], bg='#119959', fg='white')
+            lb2.grid(row=1, column=0, padx=10, pady=(0, 12))
+            btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3,command=focs)
+            btnn.grid(row=0, column=1, pady=(0, 8))
+
+            var_holder['lablo' + str(record[2])].place(x='100', y=axis)
+            axis = str(int(axis) + 100)
+            number += 1
+
+        #'#F0F0ED'
+        #lbb = LabelFrame(my_frame, bg='yellow', height=80, width=420, bd=0).place(x=100, y=axis)
+
+
+        conn.commit()
+
+        conn.close()
+
+    else:
+        messagebox.showinfo('Empty field', 'Please enter the serial number first')
+
+
+
+
+    return lol
 
 
 
@@ -231,7 +257,8 @@ def save():
 
 
     axis = '320'
-    number = 1
+    global number
+
     for record in records:
         var_holder['lablo'+str(record[2])]=Frame(my_frame, bg='#119959')
         locals().update(var_holder)
@@ -278,6 +305,7 @@ def new_win():
     btn1 = Button(new, text='Save', command=save, bg='#419c7d', bd=0, font=font2)
     btn1.place(x=126, y=160)
 
+
 def focs():
     messagebox.showinfo('Option', 'you can delete subject entering Serial number')
     Ent.focus()
@@ -289,6 +317,8 @@ lable.place(x=0, y=0)
 
 '''
 
+
+
 easy_view()
 
 c.execute('SELECT *,oid FROM info')
@@ -298,7 +328,7 @@ records = c.fetchall()
 
 axis = '320'
 
-num=1
+#num=1
 
 print(records)
 
@@ -315,10 +345,12 @@ for record in records:
     btnn = Button(var_holder['lablo' + str(record[2])], bg='green', text=record[2], height=1, width=3, command=focs)
     btnn.grid(row=0, column=1, pady=(0, 8))
 
+
+
     #btn_holder['btnn' + str(record[2])].bind('<Button-1>', delete)
     var_holder['lablo' + str(record[2])].place(x='100', y=axis)
     axis = str(int(axis) + 100)
-    num +=1
+    number +=1
 
 
 
@@ -332,8 +364,57 @@ btn1 = Button(my_frame, text='Delete', fg='white', bg='#000000', command=delete)
 btn1.place(x=518, y=15)
 
 '''
+#pytest-------------------
+'''
+@pytest.fixture
+def delet():
+    global Ent
+
+    a = Ent.get()
+
+    return a
+def test_1(delet):
+    b=1
+    assert  delet == b
+'''
 
 
+
+
+
+
+
+
+'''
+@pytest.mark.parametrize('x,y,z,a', [(Ent1,Ent2,'Admin', '123'), (Ent1,Ent2,'lol', '111'),(Ent1,Ent2,'', '123')])
+def test(x, y, z, a):
+    assert x == z
+    assert y == a
+
+
+@pytest.mark.parametrize('a,b',[(Ent.get(),''),(Ent.get(), '1')])
+def test(a,b):
+    assert a == b
+
+
+
+
+#number means total number of created list items
+
+@pytest.mark.parametrize('x,y',[(number,1),(number, 2)])
+def test(x,y):
+    assert x == y
+
+'''
+
+
+'''
+def pytest_1(delete):
+    a= 1
+    b=''
+    assert delete == a
+    assert delete == b
+'''
 conn.commit()
 
 conn.close()
