@@ -12,7 +12,8 @@ root = Tk()
 root.geometry('600x600+460+75')
 root.resizable(False, False)
 
-
+root.title('Todo-list')
+root.iconbitmap('images/icon.ico')
 
 main_frame = Frame(root, height=791, width=1000)
 
@@ -32,6 +33,8 @@ my_canvas.config(yscrollcommand=my_scrollbar.set)
 my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion= my_canvas.bbox('all')))
 
 main_frame.place(x=0, y=0)
+
+#try-1 to bind all the buttons
 
 '''
 def hello(event):
@@ -71,7 +74,7 @@ font2 = Font(
 )
 
 
-number = 0
+#number = 0
 
 
 def easy_view():
@@ -158,6 +161,7 @@ def delete():
 
 
         #checking ways
+        #used the whole commented below code in function for easy multiple use
         '''
         imgg = ImageTk.PhotoImage(file='C:/Users/dell/Downloads/bg-3.jpg')
         lable = Label(my_frame, image=imgg, width=600)
@@ -182,7 +186,7 @@ def delete():
 
         records = c.fetchall()
 
-        number = 1
+        #number = 1
         axis = '320'
         for record in records:
             var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='#119959')
@@ -196,7 +200,7 @@ def delete():
 
             var_holder['lablo' + str(record[2])].place(x='100', y=axis)
             axis = str(int(axis) + 100)
-            number += 1
+            #number += 1
 
         #'#F0F0ED'
         #lbb = LabelFrame(my_frame, bg='yellow', height=80, width=420, bd=0).place(x=100, y=axis)
@@ -218,37 +222,40 @@ def delete():
 
 
 def save():
-    conn = sqlite3.connect('data.db')
 
-    c = conn.cursor()
+    if ent1.get() != '' and ent2.get() != '':
 
-    c.execute(
-        "INSERT INTO info VALUES(:descp, :date)",
+        conn = sqlite3.connect('data.db')
 
-        {
-            'descp': ent1.get(),
-            'date': ent2.get()
+        c = conn.cursor()
 
+        c.execute(
+            "INSERT INTO info VALUES(:descp, :date)",
 
-        })
-
-    c.execute("SELECT *,oid FROM info")
-
-    records = c.fetchall()
+            {
+                'descp': ent1.get(),
+                'date': ent2.get()
 
 
-    #one =''
-    #two=''
-    #three=''
-    #four=''
-    #five=''
-    #six=''
+            })
+
+        c.execute("SELECT *,oid FROM info")
+
+        records = c.fetchall()
 
 
-    #lablo = [one, two,three, four, five, six]
+        #one =''
+        #two=''
+        #three=''
+        #four=''
+        #five=''
+        #six=''
 
 
-    var_holder = {}
+        #lablo = [one, two,three, four, five, six]
+
+
+        var_holder = {}
 
 
 
@@ -256,37 +263,43 @@ def save():
 
 
 
-    axis = '320'
-    global number
+        axis = '320'
+        #global number
 
-    for record in records:
-        var_holder['lablo'+str(record[2])]=Frame(my_frame, bg='#119959')
-        locals().update(var_holder)
-        lb1 = Label(var_holder['lablo'+str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
-        lb1.grid(row=0, column=0,padx=10, pady=(12,0))
-        lb2 = Label(var_holder['lablo'+str(record[2])], text=record[1], bg='#119959', fg='white')
-        lb2.grid(row=1, column=0,padx=10, pady=(0,12))
-        btnn = Button(var_holder['lablo'+str(record[2])],bg='green', text=record[2] , height=1, width=3,command=focs)
-        btnn.grid(row=0, column=1, pady=(0,8))
+        for record in records:
+            var_holder['lablo'+str(record[2])]=Frame(my_frame, bg='#119959')
+            locals().update(var_holder)
+            lb1 = Label(var_holder['lablo'+str(record[2])], text=record[0], bg='#119959', fg='white', width=50)
+            lb1.grid(row=0, column=0,padx=10, pady=(12,0))
+            lb2 = Label(var_holder['lablo'+str(record[2])], text=record[1], bg='#119959', fg='white')
+            lb2.grid(row=1, column=0,padx=10, pady=(0,12))
+            btnn = Button(var_holder['lablo'+str(record[2])],bg='green', text=record[2] , height=1, width=3,command=focs)
+            btnn.grid(row=0, column=1, pady=(0,8))
 
-        print(number)
-        var_holder['lablo'+str(record[2])].place(x='100', y=axis)
-        axis = str(int(axis)+ 100)
-        number +=1
-
-
-    new.destroy()
+            #print(number)
+            var_holder['lablo'+str(record[2])].place(x='100', y=axis)
+            axis = str(int(axis)+ 100)
+            #number +=1
 
 
-    conn.commit()
+        new.destroy()
 
-    conn.close()
+
+        conn.commit()
+
+        conn.close()
+
+    else:
+        new.grab_set()
+        messagebox.showinfo('Empty fields', 'Please first fill all the entries')
 
 
 def new_win():
     global ent1, ent2, new, img
     new = Toplevel()
     new.resizable(0,0)
+    new.title('Info')
+    new.iconbitmap('images/icon.ico')
 
     img = PhotoImage(file='images/grad.png')
     lb = Label(new, image=img)
@@ -350,7 +363,7 @@ for record in records:
     #btn_holder['btnn' + str(record[2])].bind('<Button-1>', delete)
     var_holder['lablo' + str(record[2])].place(x='100', y=axis)
     axis = str(int(axis) + 100)
-    number +=1
+    #number +=1
 
 
 
