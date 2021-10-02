@@ -343,7 +343,7 @@ axis = '320'
 
 #num=1
 
-print(records)
+#print(records)
 
 for record in records:
     var_holder['lablo' + str(record[2])] = Frame(my_frame, bg='#119959')
